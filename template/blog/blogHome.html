@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+	{% block title %} blogHome {% endblock %}
+	{% block blogactive %} active {% endblock blogactive %}
+{% block js %}
+<script>
+  let previews =document.getElementsByClassName('preview');
+  Array.from(previews).forEach((element)=>{
+    element.innerHTML = element.innerText;
+  })
+</script>
+{% endblock js %}
+
+    {% block body %}
+<div class="container">
+	<h2>Codding Articles by iCoder : </h2>
+{% for post in allposts %}
+<div class="row no-gutters border rounded overflow-hidden my-4 flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Article by {{post.author}} (<span>{{post.views}} views</span>)</strong>
+          <!-- <h3 class="mb-0"><a class="text-dark" href="/blog/{{post.slug}}">{{post.title}} </a></h3> -->
+          <h3 class="mb-0"><a class="text-dark" href="{{post.get_absolute_url}}">{{post.title}} </a></h3>
+          <div class="mb-1 text-muted">{{post.datetime}}</div>
+          <p class="card-text mb-auto">
+              <div class="preview">{{post.content| truncatechars:100|safe}}</div>
+          </p>
+          <div>
+          <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary">Continue reading</a>
+		    	</div>
+        </div>
+</div>
+
+
+{% endfor %}
+</div>
+
+     {% endblock %}
